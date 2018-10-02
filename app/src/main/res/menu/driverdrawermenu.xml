@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+
+        <item android:id="@+id/dr_home" android:title="Home" android:icon="@drawable/ic_home_black_24dp"/>
+        <item android:id="@+id/dr_mytrips" android:title="My Trips" android:icon="@drawable/ic_event_note_black_24dp"/>
+        <item android:id="@+id/dr_notifications" android:title="Notifications" android:icon="@drawable/ic_notifications_active_black_24dp"/>
+        <item android:id="@+id/dr_settings" android:title="Settings" android:icon="@drawable/ic_settings_black_24dp"/>
+
+</menu>

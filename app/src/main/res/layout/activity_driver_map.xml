@@ -1,0 +1,47 @@
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/driver_drawer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="com.androidapp.scalar.hailee.DriverMapActivity">
+
+    <FrameLayout
+        android:orientation="vertical"
+        android:id="@+id/flcontent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/userlocationpng"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/drivercompass"
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/black"
+            android:layout_marginTop="500dp"
+            android:layout_marginLeft="300dp"/>
+    </FrameLayout>
+    <android.support.design.widget.NavigationView
+        android:id="@+id/driverNV"
+        app:headerLayout="@layout/driver_drawer_menu_header"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        app:itemTextColor="@color/materialYellow"
+        app:itemIconTint="@color/white"
+        app:menu="@menu/driverdrawermenu"
+        android:layout_gravity="start" />
+
+
+
+</android.support.v4.widget.DrawerLayout>
