@@ -1,11 +1,12 @@
 package com.androidapp.scalar.hailee;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,10 +22,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
+
 public class LogInActivity extends AppCompatActivity {
 
     private TextView registerTxt;
-    private Button mLoginBtn;
+    private CircularProgressButton mLoginBtn;
     private EditText mEmail,mPassword;
 
     private FirebaseAuth mAuth;
@@ -114,7 +117,8 @@ public class LogInActivity extends AppCompatActivity {
 
         mEmail = (EditText) findViewById(R.id.emailLogTxt);
         mPassword = (EditText) findViewById(R.id.passwordLogTxt);
-        mLoginBtn = (Button) findViewById(R.id.loginBtn);
+        mLoginBtn = (CircularProgressButton) findViewById(R.id.loginBtn);
+
 
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,57 +127,68 @@ public class LogInActivity extends AppCompatActivity {
                 final String email = mEmail.getText().toString();
                 final String password = mPassword.getText().toString();
 
-                if(email.isEmpty() || password.isEmpty()){
-                    Toast.makeText(LogInActivity.this, "Please fill required fields",Toast.LENGTH_SHORT).show();
-                }
-                else if(!email.contains("@")){
-                    Toast.makeText(LogInActivity.this, "Please enter valid email address",Toast.LENGTH_SHORT).show();
-                }
-                else if(password.length() < 6){
-                    Toast.makeText(LogInActivity.this, "The password must be at least 6 characters.",Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(LogInActivity.this, new OnCompleteListener<AuthResult>() {
+                if (email.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(LogInActivity.this, "Please fill required fields", Toast.LENGTH_SHORT).show();
+                } else if (!email.contains("@")) {
+                    Toast.makeText(LogInActivity.this, "Please enter valid email address", Toast.LENGTH_SHORT).show();
+                } else if (password.length() < 6) {
+                    Toast.makeText(LogInActivity.this, "The password must be at least 6 characters.", Toast.LENGTH_SHORT).show();
+                } else {
+                    mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(LogInActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(!task.isSuccessful()){
-                                Toast.makeText(LogInActivity.this, "Login error",Toast.LENGTH_SHORT).show();
-                            }
-                            else{
-                                userID = mAuth.getCurrentUser().getUid();
+                            if (!task.isSuccessful()) {
+                                Toast.makeText(LogInActivity.this, "These credentials are not in our records", Toast.LENGTH_SHORT).show();
+                            } else {
 
-                                FirebaseDatabase.getInstance().getReference().child("roles").child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @SuppressLint("StaticFieldLeak") AsyncTask<String, String, String> nextActivity = new AsyncTask<String, String, String>() {
                                     @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        String role = dataSnapshot.getValue(String.class);
+                                    protected String doInBackground(String... strings) {
+                                        userID = mAuth.getCurrentUser().getUid();
 
-                                        if (role != null && role.equals("customer")) {
-                                            Intent intent = new Intent(LogInActivity.this, CustomerMapActivity.class);
-                                            startActivity(intent);
-                                            finish();
-                                            return;
-                                        } else if (role != null && role.equals("driver")){
-                                            Intent intent = new Intent(LogInActivity.this, DriverMapActivity.class);
-                                            startActivity(intent);
-                                            finish();
-                                            return;
-                                        }
+                                        FirebaseDatabase.getInstance().getReference().child("roles").child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                String role = dataSnapshot.getValue(String.class);
+
+                                                if (role != null && role.equals("customer")) {
+                                                    Intent intent = new Intent(LogInActivity.this, CustomerMapActivity.class);
+                                                    startActivity(intent);
+                                                    finish();
+                                                    return;
+                                                } else if (role != null && role.equals("driver")) {
+                                                    Intent intent = new Intent(LogInActivity.this, DriverMapActivity.class);
+                                                    startActivity(intent);
+                                                    finish();
+                                                    return;
+                                                }
 
 
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+                                            }
+
+                                        });
+
+                                        return "done";
                                     }
 
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-                                    }
+                                };
 
-                                });
-
-
-
+                                mLoginBtn.startAnimation();
+                                nextActivity.execute();
                             }
                         }
                     });
+
+
+
                 }
+
+
+
             }
         });
 

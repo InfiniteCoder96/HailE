@@ -174,7 +174,7 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
 
                     pickupLocation = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
 
-                    mHailBtn.setText("Getting Your Driver...");
+
 
                     getClosestDriver();
                 //}
@@ -236,6 +236,7 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
             public void onKeyEntered(String key, GeoLocation location) {
 
                 if(!driverFound){
+                    mHailBtn.setText("Getting Your Driver...");
                     driverFound = true;
                     driverFoundID = key;
 
@@ -287,7 +288,7 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
                         GeoFire geoFire = new GeoFire(ref);
                         geoFire.removeLocation(user_id);
                         Toast.makeText(CustomerMapActivity.this, "No drivers available",Toast.LENGTH_SHORT).show();
-                        mHailBtn.setText("HAIL A TAXI");
+                        mHailBtn.setText("Hail a Taxi");
                     }
                 }
             }
@@ -392,7 +393,9 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
                 fragmentManager.beginTransaction().replace(R.id.flcontent, new DriverProfileFragment()).commit();
                 break;
             case R.id.cu_payment:
-                fragmentManager.beginTransaction().replace(R.id.flcontent, new DriverProfileFragment()).commit();
+                Intent intent2 = new Intent(CustomerMapActivity.this, Payment.class);
+                startActivity(intent2);
+                finish();
                 break;
             case R.id.cu_notifications:
                 fragmentManager.beginTransaction().replace(R.id.flcontent, new DriverProfileFragment()).commit();
@@ -539,7 +542,6 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
             return;
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);

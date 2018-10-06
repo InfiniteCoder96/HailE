@@ -59,7 +59,22 @@
 
         <activity android:theme="@style/welcomeSplash" android:name=".WelcomeSplash"/>
 
-
+        <activity
+            android:theme="@style/ThemeActionBar"
+            android:name=".creditCardDetailsView"
+            android:label="@string/title_activity_creditCardDetailsView"
+            android:parentActivityName=".Payment">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Payment"/>
+        </activity>
+        <activity
+            android:theme="@style/ThemeActionBar"
+            android:name=".Payment"
+            android:label="@string/title_activity_payment"
+            android:parentActivityName=".CustomerMapActivity">
+        <meta-data android:name="android.support.PARENT_ACTIVITY"
+            android:value=".CustomerMapActivity"/>
+        </activity>
     </application>
 
 </manifest>

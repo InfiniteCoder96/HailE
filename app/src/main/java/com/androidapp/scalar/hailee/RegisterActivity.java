@@ -1,11 +1,12 @@
 package com.androidapp.scalar.hailee;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -23,11 +24,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
+
 
 public class RegisterActivity extends AppCompatActivity {
 
     private TextView loginTxt;
-    private Button registerBtn;
+    private CircularProgressButton registerBtn;
     private EditText mEmail,mPassword,mConfirmPw;
     private RadioGroup mRoleChooser;
     private RadioButton mRole;
@@ -115,7 +118,7 @@ public class RegisterActivity extends AppCompatActivity {
         mPassword = (EditText) findViewById(R.id.passwordTxt);
         mConfirmPw = (EditText) findViewById(R.id.confirmPwTxt);
         mRoleChooser = (RadioGroup) findViewById(R.id.roleChooser);
-        registerBtn = (Button) findViewById(R.id.registerBtn);
+        registerBtn = (CircularProgressButton) findViewById(R.id.registerBtn);
 
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,20 +156,42 @@ public class RegisterActivity extends AppCompatActivity {
                                 Toast.makeText(RegisterActivity.this, "Register error", Toast.LENGTH_SHORT).show();
                             }
                             else{
-                                String user_id = mAuth.getCurrentUser().getUid();
+                                @SuppressLint("StaticFieldLeak") AsyncTask<String, String, String> nextActivity = new AsyncTask<String, String, String>() {
+                                    @Override
+                                    protected String doInBackground(String... strings) {
+                                        String user_id = mAuth.getCurrentUser().getUid();
 
-                                if(role.equals("I'm a Customer")){
-                                    mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(user_id);
-                                    DatabaseReference myRef = database.getReference("roles").child(user_id);
-                                    myRef.setValue("customer");
-                                }
-                                else if(role.equals("I'm a Driver")){
-                                    mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers").child(user_id);
-                                    DatabaseReference myRef = database.getReference("roles").child(user_id);
-                                    myRef.setValue("driver");
-                                }
+                                        if(role.equals("I'm a Customer")){
+                                            mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(user_id);
+                                            DatabaseReference myRef = database.getReference("roles").child(user_id);
+                                            myRef.setValue("customer");
+                                        }
+                                        else if(role.equals("I'm a Driver")){
+                                            mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers").child(user_id);
+                                            DatabaseReference myRef = database.getReference("roles").child(user_id);
+                                            myRef.setValue("driver");
+                                        }
 
-                                mUserDatabase.setValue(true);
+                                        mUserDatabase.setValue(true);
+
+                                        return "done";
+                                    }
+
+
+                                    @Override
+                                    protected void onPostExecute(String s) {
+                                        if (s.equals("done")) {
+
+
+                                        }
+
+                                    }
+                                };
+
+                                registerBtn.startAnimation();
+                                nextActivity.execute();
+
+
 
                             }
                         }

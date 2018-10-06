@@ -68,12 +68,6 @@ public class LocationManagerCheck {
                                 activityObj.startActivity(intent);
                                 dialog.dismiss();
                             }
-                        })
-                .setNegativeButton("Cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.dismiss();
-                            }
                         });
         alert = builder.create();
         alert.show();

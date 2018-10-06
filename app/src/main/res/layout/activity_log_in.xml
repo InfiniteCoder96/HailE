@@ -11,8 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="30dp"
-        app:cardCornerRadius="4dp"
-        >
+        app:cardCornerRadius="4dp">
 
         <LinearLayout
             android:orientation="vertical"
@@ -50,14 +49,17 @@
                 android:layout_marginTop="15dp"
                 android:layout_gravity="center_horizontal"/>
 
-            <Button
+            <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
                 android:id="@+id/loginBtn"
                 android:background="@drawable/welcomebuttonstyle"
                 android:text="Log In"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"/>
+                android:layout_marginTop="30dp"
+                app:spinning_bar_color="@color/white"
+                app:spinning_bar_padding="6dp"
+                app:spinning_bar_width="4dp"/>
 
             <LinearLayout
                 android:layout_marginTop="50dp"

@@ -1,6 +1,7 @@
 package com.androidapp.scalar.hailee;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -19,9 +20,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
+
 public class HomeActivity extends AppCompatActivity {
 
     LinearLayout l1,l2;
+    CircularProgressButton circularProgressButton;
     Button nextBtn;
     Animation uptodown,downtoup;
 
@@ -37,8 +41,20 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        nextBtn = (Button) findViewById(R.id.nxtbtn);
-        nextBtn.setVisibility(View.VISIBLE);
+        circularProgressButton = (CircularProgressButton) findViewById(R.id.nxtbtn);
+
+
+        mAuth = FirebaseAuth.getInstance();
+
+
+        AuthenticationCheck();
+
+        animate();
+
+    }
+
+    public void AuthenticationCheck(){
+
         mAuth = FirebaseAuth.getInstance();
 
 
@@ -50,7 +66,33 @@ public class HomeActivity extends AppCompatActivity {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                     if(user != null) {
-                        nextBtn.setVisibility(View.GONE);
+                        circularProgressButton.startAnimation();
+
+//                        AsyncTask<String,String,String> nextActivity = new AsyncTask<String, String, String>() {
+//                            @Override
+//                            protected String doInBackground(String... strings) {
+//                                try {
+//                                    Thread.sleep(3000);
+//                                } catch (InterruptedException e) {
+//                                    e.printStackTrace();
+//                                }
+//
+//                                return "done";
+//                            }
+//
+//                            @Override
+//                            protected void onPostExecute(String s) {
+//                                if(s.equals("done")){
+//                                    Intent intent = new Intent(HomeActivity.this, LogInActivity.class);
+//                                    startActivity(intent);
+//                                    finish();
+//                                    return;
+//                                }
+//                            }
+//                        };
+//
+//                        circularProgressButton.startAnimation();
+//                        nextActivity.execute();
 
                         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(user.getUid());
 
@@ -61,24 +103,23 @@ public class HomeActivity extends AppCompatActivity {
                                 try {
                                     String role = dataSnapshot.getValue(String.class);
 
-                                    if (role.equals("customer")) {
 
+                                    if (role != null && role.equals("customer")) {
                                         Intent intent = new Intent(HomeActivity.this, CustomerMapActivity.class);
                                         startActivity(intent);
                                         finish();
                                         return;
-                                    } else {
+                                    } else if (role != null && role.equals("driver")){
                                         Intent intent = new Intent(HomeActivity.this, DriverMapActivity.class);
                                         startActivity(intent);
                                         finish();
                                         return;
                                     }
                                 }
-                                catch (NullPointerException e){
+                                catch (Exception e){
+                                    e.printStackTrace();
                                     Toast.makeText(HomeActivity.this, "Something went wrong..Please try again later",Toast.LENGTH_SHORT).show();
                                 }
-
-
 
                             }
 
@@ -89,18 +130,15 @@ public class HomeActivity extends AppCompatActivity {
                         });
                     }
                 }
-                catch (NullPointerException e){
+                catch (Exception e){
+                    e.printStackTrace();
                     Toast.makeText(HomeActivity.this, "Something went wrong..Please try again later",Toast.LENGTH_SHORT).show();
                 }
 
 
             }
         };
-
-        animate();
-
     }
-
     public void animate(){
         l1 = (LinearLayout) findViewById(R.id.L1);
         l2 = (LinearLayout) findViewById(R.id.L2);
@@ -113,13 +151,37 @@ public class HomeActivity extends AppCompatActivity {
         l1.setAnimation(uptodown);
         l2.setAnimation(downtoup);
 
-        nextBtn.setOnClickListener(new View.OnClickListener() {
+        circularProgressButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomeActivity.this, LogInActivity.class);
-                startActivity(intent);
-                finish();
-                return;
+
+
+                AsyncTask<String,String,String> nextActivity = new AsyncTask<String, String, String>() {
+                    @Override
+                    protected String doInBackground(String... strings) {
+                        try {
+                            Thread.sleep(3000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        return "done";
+                    }
+
+                    @Override
+                    protected void onPostExecute(String s) {
+                        if(s.equals("done")){
+                            Intent intent = new Intent(HomeActivity.this, LogInActivity.class);
+                            startActivity(intent);
+                            finish();
+                            return;
+                        }
+                    }
+                };
+
+                circularProgressButton.startAnimation();
+                nextActivity.execute();
+
 
             }
         });
