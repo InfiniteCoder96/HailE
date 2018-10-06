@@ -1,5 +1,8 @@
 package com.androidapp.scalar.hailee;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -150,21 +153,21 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
             @Override
             public void onClick(View v) {
 
-//                if(requestStatus){
-//                    requestStatus = false;
-//                    geoQuery.removeAllListeners();
-//                    driverLocationRef.removeEventListener(driverLocationRefListner);
-//
-//                    String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//
-//                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("CustomerRequests");
-//
-//                    GeoFire geoFire = new GeoFire(ref);
-//
-//                    geoFire.removeLocation(user_id);
-//                }
-//                else{
-                    //requestStatus = true;
+                if(requestStatus){
+                    requestStatus = false;
+                    geoQuery.removeAllListeners();
+                    driverLocationRef.removeEventListener(driverLocationRefListner);
+
+                    String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("CustomerRequests");
+
+                    GeoFire geoFire = new GeoFire(ref);
+
+                    geoFire.removeLocation(user_id);
+                }
+                else{
+                    requestStatus = true;
                     String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("CustomerRequests");
 
@@ -178,7 +181,7 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
 
 
                     getClosestDriver();
-                //}
+               }
 
 
             }
@@ -301,6 +304,7 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
         });
     }
 
+
     private void getDriverLocation(){
 
         DatabaseReference driverLocationRef = FirebaseDatabase.getInstance().getReference().child("DriversWorking").child(driverFoundID).child("l");
@@ -337,7 +341,20 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
 
                     float distance_driver_customer = loc1.distanceTo(loc2);
 
-                    calculateFare(distance_driver_customer);
+                    if(distance_driver_customer < 100){
+                        Intent intent = new Intent();
+                        PendingIntent pendingIntent = PendingIntent.getActivity(CustomerMapActivity.this, 0, intent, 0);
+                        Notification notification = new Notification.Builder(CustomerMapActivity.this)
+                                .setTicker("HailE driver has arrived")
+                                .setContentTitle("Your driver has arrived")
+                                .setContentText("You have 10 mins to get on board")
+                                .setSmallIcon(R.drawable.taxi)
+                                .setContentIntent(pendingIntent).getNotification();
+
+                        notification.flags = Notification.FLAG_AUTO_CANCEL;
+                        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                        notificationManager.notify(0, notification);
+                    }
 
                     String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
 

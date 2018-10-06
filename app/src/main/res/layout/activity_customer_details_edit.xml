@@ -74,6 +74,7 @@
                     android:text="Name"
                     android:textColor="@color/white"/>
                 <EditText
+                    android:inputType="text"
                     android:background="@drawable/edittextstyle"
                     android:id="@+id/customer_name"
                     android:layout_width="match_parent"
@@ -100,6 +101,7 @@
                     android:text="Email Address"
                     android:textColor="@color/white"/>
                 <EditText
+                    android:inputType="textEmailAddress"
                     android:background="@drawable/edittextstyle"
                     android:id="@+id/customer_email"
                     android:layout_width="match_parent"
@@ -127,6 +129,7 @@
                     android:text="Mobile Number"
                     android:textColor="@color/white"/>
                 <EditText
+                    android:inputType="phone"
                     android:background="@drawable/edittextstyle"
                     android:id="@+id/customer_mobileNum"
                     android:layout_width="match_parent"

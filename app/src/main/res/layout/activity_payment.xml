@@ -1,86 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.androidapp.scalar.hailee.Payment">
+    tools:context="com.androidapp.scalar.hailee.Payment"
+    android:orientation="vertical"
+    android:background="@color/black">
 
 
-    <TextView
-        android:layout_width="219dp"
-        android:layout_height="39dp"
-        android:text="PAYMENT METHOD"
-        android:textColorLink="?attr/colorBackgroundFloating"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.157"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.11" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <RadioGroup
-        android:id="@+id/paymentMethodRadioGroup"
-        android:layout_width="305dp"
-        android:layout_height="267dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.971"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Payment Methods"
+            android:textColor="@color/white"
+            android:textColorLink="?attr/colorBackgroundFloating"
+            android:textSize="20sp"
+            android:layout_gravity="left"
+            android:layout_marginLeft="5dp"/>
 
-        <RadioButton
-            android:id="@+id/radioButtonCash"
-            android:layout_width="143dp"
-            android:layout_height="45dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="10dp"
-            android:checked="true"
-            android:text="Cash"
-            android:textColor="@color/colorPrimary"
-            android:textColorLink="@android:color/background_light"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.933"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.282" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="left"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="50dp">
 
-        <RadioButton
-            android:id="@+id/radioButtonCredit"
-            android:layout_width="146dp"
-            android:layout_height="39dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="35dp"
-            android:text="Credit Card"
-            android:textColor="@color/colorPrimary"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.925"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <RadioGroup
+                android:id="@+id/paymentMethodRadioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-    </RadioGroup>
+                <RadioButton
+                    android:id="@+id/radioButtonCash"
+                    android:layout_width="143dp"
+                    android:layout_height="45dp"
+                    android:buttonTint="@color/materialYellow"
+                    android:checked="true"
+                    android:text="Cash"
+                    android:textColor="@color/white"
+                    android:textColorLink="@android:color/background_light" />
 
-    <Button
-        android:id="@+id/paymentMethodSubmitButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:text="Submit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+                <RadioButton
+                    android:id="@+id/radioButtonCredit"
+                    android:layout_width="146dp"
+                    android:layout_height="39dp"
+                    android:buttonTint="@color/materialYellow"
+                    android:text="Credit Card"
+                    android:textColor="@color/white" />
 
-</android.support.constraint.ConstraintLayout>
+            </RadioGroup>
+        </LinearLayout>
+        <Button
+            android:id="@+id/paymentMethodSubmitButton"
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:background="@drawable/welcomebuttonstyle"
+            android:textAllCaps="false"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
+
+
+
+
+
+
+</LinearLayout>

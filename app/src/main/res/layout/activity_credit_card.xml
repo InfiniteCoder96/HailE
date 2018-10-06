@@ -5,7 +5,8 @@
     android:id="@+id/backgroundLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.androidapp.scalar.hailee.creditCardDetailsView">
+    tools:context="com.androidapp.scalar.hailee.creditCardDetailsView"
+    android:background="@color/materialGreen">
 
     <TextView
         android:id="@+id/textView3"
@@ -25,6 +26,7 @@
         app:layout_constraintVertical_bias="0.042" />
 
     <EditText
+        android:background="@drawable/edittextstyle"
         android:id="@+id/holderNameEditText"
         android:layout_width="301dp"
         android:layout_height="wrap_content"
@@ -59,6 +61,7 @@
         app:layout_constraintVertical_bias="0.326" />
 
     <EditText
+        android:background="@drawable/edittextstyle"
         android:id="@+id/cardNumberEditText"
         android:layout_width="302dp"
         android:layout_height="wrap_content"
@@ -122,6 +125,7 @@
         app:layout_constraintVertical_bias="0.575" />
 
     <EditText
+        android:background="@drawable/edittextstyle"
         android:id="@+id/monthEditText"
         android:layout_width="47dp"
         android:layout_height="wrap_content"
@@ -139,6 +143,7 @@
         app:layout_constraintVertical_bias="0.659" />
 
     <EditText
+        android:background="@drawable/edittextstyle"
         android:id="@+id/yearEditText"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
@@ -156,9 +161,10 @@
         app:layout_constraintVertical_bias="0.659" />
 
     <EditText
+        android:background="@drawable/edittextstyle"
         android:id="@+id/ccvEditText"
         android:layout_width="139dp"
-        android:layout_height="41dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -181,6 +187,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Submit"
+        android:textAllCaps="false"
+        android:background="@drawable/welcomebuttonstyle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.739"
@@ -196,7 +204,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="DELETE"
+        android:text="Reset"
+        android:textAllCaps="false"
+        android:background="@drawable/welcomebuttonstyle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/creditdetailssubmit"
         app:layout_constraintHorizontal_bias="0.486"
