@@ -9,11 +9,13 @@ public class user {
     private String email;
     private String password;
     private String name;
+    private String profileImageUri;
 
-    public user(String email,String password,String name){
+    public user(String email, String password, String name, String profileImageUri){
         this.setEmail(email);
         this.setName(name);
         this.setPassword(password);
+        this.setProfileImageUri(profileImageUri);
     }
 
     public String getEmail() {
@@ -40,4 +42,11 @@ public class user {
         this.name = name;
     }
 
+    public void setProfileImageUri(String profileImageUri) {
+        this.profileImageUri = profileImageUri;
+    }
+
+    public String getProfileImageUri() {
+        return profileImageUri;
+    }
 }

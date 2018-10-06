@@ -83,6 +83,7 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
     private Boolean requestStatus = false;
     private Boolean onRideStatus = false;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -322,9 +323,9 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
 
                     LatLng driverLatLang = new LatLng(locationLat,locationLong);
 
-//                    if(mDriverMarker != null){
-//                        mDriverMarker.remove();
-//                    }
+                    if(mDriverMarker != null){
+                        mDriverMarker.remove();
+                    }
 
                     Location loc1 = new Location("");
                     loc1.setLatitude(pickupLocation.latitude);
@@ -384,7 +385,6 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
             case R.id.cu_home:
                 Intent intent = new Intent(CustomerMapActivity.this, CustomerMapActivity.class);
                 startActivity(intent);
-                finish();
                 break;
             case R.id.cu_book_later:
                 fragmentManager.beginTransaction().replace(R.id.flcontent, new DriverProfileFragment()).commit();
@@ -395,13 +395,13 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
             case R.id.cu_payment:
                 Intent intent2 = new Intent(CustomerMapActivity.this, Payment.class);
                 startActivity(intent2);
-                finish();
                 break;
             case R.id.cu_notifications:
                 fragmentManager.beginTransaction().replace(R.id.flcontent, new DriverProfileFragment()).commit();
                 break;
             case R.id.cu_settings:
-                fragmentManager.beginTransaction().replace(R.id.flcontent, new CustomerProfileFragment()).commit();
+                Intent intent3 = new Intent(CustomerMapActivity.this, CustomerProfileActivity.class);
+                startActivity(intent3);
                 break;
             default:
                 fragmentManager.beginTransaction().replace(R.id.flcontent, new DriverProfileFragment()).commit();

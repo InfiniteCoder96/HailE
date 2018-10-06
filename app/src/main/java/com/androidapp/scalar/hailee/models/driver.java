@@ -10,8 +10,8 @@ public class driver extends user {
     private String vehicleType;
 
 
-    public driver(String email,String password,String name,String vehicleRegNum,String vehicleType){
-        super(email,password,name);
+    public driver(String email,String password,String name,String vehicleRegNum,String vehicleType,String profileImageUri){
+        super(email,password,name, profileImageUri);
         this.setVehicleRegNum(vehicleRegNum);
         this.setVehicleType(vehicleType);
     }

@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -49,31 +50,54 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:theme="@style/ThemeActionBar"
             android:name=".DriverMapActivity"
-            android:label="@string/title_activity_driver_map" />
+            android:label="@string/title_activity_driver_map"
+            android:theme="@style/ThemeActionBar" />
         <activity
-            android:theme="@style/ThemeActionBar"
             android:name=".CustomerMapActivity"
-            android:label="@string/title_activity_customer_map" />
-
-        <activity android:theme="@style/welcomeSplash" android:name=".WelcomeSplash"/>
-
+            android:label="@string/title_activity_customer_map"
+            android:theme="@style/ThemeActionBar" />
         <activity
-            android:theme="@style/ThemeActionBar"
+            android:name=".WelcomeSplash"
+            android:theme="@style/welcomeSplash" />
+        <activity
+            android:launchMode="singleTop"
             android:name=".creditCardDetailsView"
             android:label="@string/title_activity_creditCardDetailsView"
-            android:parentActivityName=".Payment">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Payment"/>
+            android:parentActivityName=".Payment"
+            android:theme="@style/ThemeActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Payment" />
         </activity>
         <activity
-            android:theme="@style/ThemeActionBar"
+            android:launchMode="singleTop"
             android:name=".Payment"
             android:label="@string/title_activity_payment"
+            android:parentActivityName=".CustomerMapActivity"
+            android:theme="@style/ThemeActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".CustomerMapActivity" />
+        </activity>
+        <activity
+            android:launchMode="singleTop"
+            android:name=".CustomerProfileActivity"
+            android:theme="@style/ThemeActionBar"
             android:parentActivityName=".CustomerMapActivity">
-        <meta-data android:name="android.support.PARENT_ACTIVITY"
-            android:value=".CustomerMapActivity"/>
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".CustomerMapActivity" />
+        </activity>
+        <activity
+            android:launchMode="singleTop"
+            android:name=".CustomerDetailsEditActivity"
+            android:theme="@style/ThemeActionBar"
+            android:parentActivityName=".CustomerProfileActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".CustomerProfileActivity" />
         </activity>
     </application>
 
